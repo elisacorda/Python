@@ -1,0 +1,126 @@
+# FIRST EXERCISE
+# Reverse each word in a string using a Stack
+# Words must stay in the same initial position
+# E.g., "Algorithm and Data Structures" will become "mhtiroglA dna ataD serutcurtS"
+
+import sys
+sys.path.append("..")
+from LinearStructures.Stack import Stack 
+
+# Reverse each words of a string maintaining their position
+def reverserWords(input_string):
+    st = Stack()
+    revString = ""
+    rev_list=[]
+
+    list_string=myString.split()
+    for word in list_string:
+        for letter in word:
+            st.push(letter)
+        while not st.isEmpty():
+            e=st.pop()
+            rev_list.append(e)
+        rev_list.append(" ")
+    revString=revString.join(rev_list)
+
+    # return the reversed string
+    return revString
+
+
+
+# SECOND EXERCISE 
+# Delete the middle element of Stack
+# Write a script to remove the middle element of a Stack
+# E.g.: input [1, 2, 3, 4, 5]
+#       output [1, 2, 4, 5]
+#
+# NOTE: you can solve the problem using an auxiliary stack or using recursion
+
+import sys
+sys.path.append("..")
+from LinearStructures.Stack import Stack
+
+def deleteMidElem(st1):
+    st2= Stack()
+    if st1.size()%2==0:
+        return st1
+    else:
+        while not st1.size()==st2.size()+1:
+            e=st1.pop()
+            st2.push(e)
+        st1.pop()
+        while not st2.isEmpty():
+            last_elem=st2.pop()
+            st1.push(last_elem)
+        return st1
+
+# Test Code
+if __name__ == "__main__":
+    st1 = Stack()
+
+    for i in range(1, 10):
+        st1.push(i)
+
+    print(st1)
+    print(deleteMidElem(st1))
+
+
+
+# THIRD EXERCISE
+"""
+Redundant parentheses
+Write a program that checks whether a valid expression has redundant parentheses or not
+E.g.:    ( (a + b) )            # Redundant
+         ( a + (b) / c )        # Redundant
+         ( a + ( (b + c) ) )    # Redundant
+         (a + b * (c - d) )     # Not redundant
+"""
+# DIFFICULT: Check whether or not a valid expression has redundant parentheses
+
+import sys
+sys.path.append("..")
+from LinearStructures import Stack
+
+# Function to check redundant parentheses in a valid expression
+# It returns True if there are duplicate parentheses False otherwise
+def checkRedundancy(expression):
+
+    exp_clean ="".join(expression.split(" ")) # return a string with no blank spaces
+    operators = {"+", "-", "/", "*"} # set of valid operator
+    print(exp_clean)
+    
+    st = Stack() # create an empty stack
+    for char in exp_clean:
+        if char == ")":
+            pop = st.pop()
+            inside_operators = 0
+            while pop != "(":
+                if pop in operators:
+                    inside_operators += 1
+                pop=st.pop()
+            if inside_operators == 0:
+                return True
+        else:
+            st.push(char)
+    return False 
+
+# Function that prints the result
+def isRedundant(expression):
+    if checkRedundancy(expression) is True:
+        print("The expression has redundant parentheses")
+    else:
+        print("The expression has no redundant parentheses")
+
+# Test code
+if __name__ == '__main__':
+    exp = "( (a + b) )"  # Redundant
+    isRedundant(exp)
+
+    exp = "( a + (b) / c )"  # Redundant
+    isRedundant(exp)
+
+    exp = "( a + ( (b + c) ) )"  # Redundant
+    isRedundant(exp)
+
+    exp = "(a + b * (c - d) )"  # Not redundant
+    isRedundant(exp)
