@@ -1,0 +1,22 @@
+# Reversing the content of Stack using recursion
+# You can use only one Stack, no other data structures are needed
+# You cannot use any iterative loop
+
+import sys
+sys.path.append("..")
+from LinearStructures import Stack
+
+def insertBack(st, elem):
+    if st.isEmpty():
+        st.push(elem)
+    else:
+        tmp = st.pop()
+        insertBack(st, elem)
+        st.push(tmp)
+
+def reverseStack(st):
+    if st.isEmpty():
+        return
+    item = st.pop()
+    reverseStack(st)
+    insertBack(st, item)
