@@ -1,0 +1,33 @@
+"""Second exercise: Capitalize the first letter of all the words in a text.
+Create a program with the following functions:
+    - "readTxtFile", that reads a text file and memorize all the lines in a list
+    - "capitalizeWords", that capitalizes the first letter of each word in each line and save the result in a new list
+    - "writeTxtFile", that write the capitalized text in a new text file
+Test the program using the file "loremipsum.txt" and write the result is "loremipsum_cap.txt"
+NOTE: Try to avoid capitalize(), other useful methods to modify strings are split(), upper(), join() 
+"""
+
+def readTxtFile(filepath):
+    with open(filepath, "r") as file:
+        return [str(line.strip()) for line in file]
+
+def capitaliseWords(lineList):
+    result = list()
+    for line in lineList:
+        words_list = line.split(" ")
+        for index in range(len(words_list)):
+            words_list[index] = words_list[index][0].upper() + words_list[index][1::]
+        result.append(" ".join(words_list))
+    return result
+
+def writeTxtFile(filepath, lineList):
+    with open(filepath, "w") as file:
+        for line in lineList:
+            file.write(line + "\n")
+
+if __name__ == "__main__":
+    lineList = readTxtFile("loremipsum.txt")
+    capitalisedLineList = capitaliseWords(lineList)
+    print(capitalisedLineList)
+    writeTxtFile("loremipsum_cap.txt", capitalisedLineList)
+    
